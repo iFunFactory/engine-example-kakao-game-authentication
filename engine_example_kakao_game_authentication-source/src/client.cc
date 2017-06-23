@@ -8,6 +8,8 @@
 
 DEFINE_string(server_ip, "127.0.0.1", "");
 DEFINE_uint64(server_port, 8012, "");
+DEFINE_string(kakao_game_access_token, "12345", "");
+DEFINE_string(kakao_game_user_id, "12345", "");
 
 
 namespace engine_example_kakao_game_authentication {
@@ -18,8 +20,8 @@ void InitializeKakaoGameSdk(const Ptr<funtest::Session> &session) {
   // 카카오 게임 SDK 를 연동하지 않았으므로 여기서는
   // 카카오 게임 인증에 필요한 데이터들을 임의로 만든다.
 
-  const string access_token = RandomGenerator::GenerateAlphanumeric(10, 20);
-  const string user_id = RandomGenerator::GenerateAlphanumeric(10, 20);
+  const string access_token = FLAGS_kakao_game_access_token;
+  const string user_id = FLAGS_kakao_game_user_id;
 
   // 발급받은 access_token, user_id 를 세션 컨텍스트에 저장한다.
   Json &ctxt = session->GetContext();
@@ -61,7 +63,7 @@ void OnTcpTransportDetached(const Ptr<funtest::Session> &session) {
 
 
 // 서버가 cs_login 에 대한 응답 메시지인 sc_login 를 보내면 호출된다.
-void OnLogin(const Ptr<funtest::Session> &session, const Json &message) {
+void OnSCLogin(const Ptr<funtest::Session> &session, const Json &message) {
   LOG_ASSERT(message.HasAttribute("result", Json::kBoolean));
 
   // result 값에 따라 적당히 성공/실패 로그를 출력한다.
@@ -82,7 +84,7 @@ void InstallClient() {
       OnTcpTransportAttached, OnTcpTransportDetached);
 
   // 서버에서 보내는 메시지를 받을 핸들러를 등록한다.
-  funtest::Network::Register("sc_login", OnLogin);
+  funtest::Network::Register("sc_login", OnSCLogin);
 }
 
 
