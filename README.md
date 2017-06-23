@@ -26,7 +26,7 @@
 
 **Clone**
 ```bash
-  git clone https://github.com/iFunFactory/game-pong-server.git
+  git clone https://github.com/iFunFactory/engine-example-kakao-game-authentication.git
 ```
 
 또는
