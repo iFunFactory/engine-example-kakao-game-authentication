@@ -25,7 +25,7 @@
 아래와 같이 git clone 또는 zip 파일을 다운받습니다.
 
 **Clone**
-````bash
+```bash
   git clone https://github.com/iFunFactory/game-pong-server.git
 ```
 
